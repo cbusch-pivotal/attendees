@@ -1,0 +1,25 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: java
+    tag: '8'
+
+inputs:
+  - name: pcf-ers-repo
+  - name: version
+
+outputs:
+  - name: build-output
+
+run:
+  path: pcf-ers-repo/ci/tasks/build.sh
+  args: [
+    --input-dir, pcf-ers-repo,
+    --output-dir, build-output,
+    --version-file, version/number,
+    --artifactId, pcf-ers-demo,
+    --packaging, jar
+  ]
