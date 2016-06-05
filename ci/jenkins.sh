@@ -3,8 +3,8 @@ set -e -x
 
 echo "Build number is: ${BUILD_NUMBER}"
 
-hostName=attendees
-appBase=${hostName}-v
+hostname=attendees
+appBase=${hostname}-v
 appName=${appBase}${BUILD_NUMBER}
 verHostname=${appName}
 cfDomain=pcf1.fe.gopivotal.com
@@ -14,7 +14,9 @@ deployedApps=$(cf apps | grep ${appBase} | cut -d" " -f1)
 #echo "Deployed app(s): $deployedApps"
 
 # push the new (green) version to PCF
-cf push $appName -n $verHostName
+targetJar=target/${hostname}-${BUILD_NUMBER}.jar
+#cf push $appName -n $verHostname -p $targetJar
+cf push $appName -n $verHostname -m 1G -i 1 -p $targetJar --no-manifest
 
 # Smoke test before adding new green app to main app route
 echo "Do some smoke testing...."
@@ -24,7 +26,10 @@ echo "Do some smoke testing...."
 # Map app version onto main app route and scale the app to support traffic
 # i.e. $ cf map-route attendees-v5 cfapps.io -n attendees
 echo "map ${appName} to route ${hostname}.${cfDomain}"
-cf map-route $appName $cfDomain -n $hostName
+cf map-route $appName $cfDomain -n $hostname
+
+# remove new version route
+cf unmap-route $appName $cfDomain -n $verHostname
 
 # cf scale attendees-v5 -i 2
 echo "scaling ${appName} up..."
@@ -46,3 +51,4 @@ if [ ! -z "$deployedApps" -a "$deployedApps" != " " -a "$deployedApps" != "$appN
     fi
   done <<<"$deployedApps" 
 fi
+
