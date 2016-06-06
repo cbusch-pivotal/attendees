@@ -7,6 +7,7 @@ hostname=attendees
 appBase=${hostname}-v
 appName=${appBase}${BUILD_NUMBER}
 verHostname=${appName}
+testRoute=${hostname}-test
 cfDomain=pcf1.fe.gopivotal.com
 
 # find all existing apps starting with "attendees-v"
@@ -26,7 +27,7 @@ echo "Do some smoke testing...."
 # Map app version onto main app route and scale the app to support traffic
 # i.e. $ cf map-route attendees-v5 cfapps.io -n attendees
 echo "map ${appName} to route ${hostname}.${cfDomain}"
-cf map-route $appName $cfDomain -n $hostname
+cf map-route $appName $cfDomain -n $testRoute
 
 # remove new version route
 cf unmap-route $appName $cfDomain -n $verHostname
@@ -44,11 +45,14 @@ if [ ! -z "$deployedApps" -a "$deployedApps" != " " -a "$deployedApps" != "$appN
     if [ ! -z "$line" -a "$line" != " " -a "$line" != "$appName" -a "$line" != "$hostname" ]; then 
       echo "Scaling down, unmapping and removing app: $line"
       cf scale "$line" -i 1
-      cf unmap-route "$line" $cfDomain -n $hostname
+      cf unmap-route "$line" $cfDomain -n $testRoute
       cf delete "$line" -f 
     else
       echo "Skipping $line" 
     fi
   done <<<"$deployedApps" 
 fi
+
+# clean up any unused routes to avoid conflicts in the future
+cf delete-orphaned-routes -f
 
