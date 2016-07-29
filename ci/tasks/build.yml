@@ -17,7 +17,7 @@ outputs:
 run:
   path: attendees-repo/ci/tasks/build.sh
   args: [
-    --input-dir, attendees-dir,
+    --input-dir, attendees-repo,
     --output-dir, build-output,
     --version-file, version/number,
     --artifactId, attendees,
