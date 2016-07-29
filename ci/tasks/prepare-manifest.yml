@@ -11,19 +11,19 @@ params:
   CF_MANIFEST_HOST: attendees
 
 inputs:
-  - name: pcf-ers-repo
+  - name: attendees-repo
   - name: app-release
   - name: version
 
 outputs:
   - name: prepare-manifest
 run:
-  path: pcf-ers-repo/ci/tasks/prepare-manifest.sh
+  path: attendees-repo/ci/tasks/prepare-manifest.sh
   args: [
     --input-dir, app-release,
     --output-dir, prepare-manifest,
     --version-file, version/number,
-    --input-manifest, pcf-ers-repo/manifest.yml,
-    --artifactId, pcf-ers-demo,
+    --input-manifest, attendees-repo/manifest.yml,
+    --artifactId, attendees,
     --packaging, jar
   ]

@@ -8,8 +8,8 @@ image_resource:
     tag: '8'
 
 inputs:
-  - name: pcf-ers-repo
+  - name: attendees-repo
   - name: app-release 
 
 run:
-  path: pcf-ers-repo/ci/tasks/test.sh
+  path: attendees-repo/ci/tasks/test.sh

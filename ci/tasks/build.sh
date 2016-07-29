@@ -2,8 +2,6 @@
 
 set -e -x
 
-# FROM PCF-DEMO REPO ----
-
 # args
 inputDir=  outputDir=  versionFile=  artifactId=  packaging=
 

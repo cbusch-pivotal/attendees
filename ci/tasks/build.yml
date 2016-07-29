@@ -8,18 +8,18 @@ image_resource:
     tag: '8'
 
 inputs:
-  - name: pcf-ers-repo
+  - name: attendees-repo
   - name: version
 
 outputs:
   - name: build-output
 
 run:
-  path: pcf-ers-repo/ci/tasks/build.sh
+  path: attendees-repo/ci/tasks/build.sh
   args: [
-    --input-dir, pcf-ers-repo,
+    --input-dir, attendees-dir,
     --output-dir, build-output,
     --version-file, version/number,
-    --artifactId, pcf-ers-demo,
+    --artifactId, attendees,
     --packaging, jar
   ]

@@ -17,11 +17,11 @@ params:
   CF_HOST: attendees
 
 inputs:
-  - name: pcf-ers-repo
+  - name: attendees-repo
   - name: version
 
 run:
-  path: pcf-ers-repo/ci/tasks/finalize-deploy.sh
+  path: attendees-repo/ci/tasks/finalize-deploy.sh
   args: [
     --version-file, version/number
   ]
