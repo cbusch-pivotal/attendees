@@ -47,7 +47,7 @@ version=`cat $versionFile`
 appName="${artifactId}-${version//\./-}"
 
 # route name -- could use different name than the app name (artifactId)
-routeName="${hostname}-${version//\./-}"
+#routeName="${hostname}-${version//\./-}"
 
 # get latest CF CLI
 curl -L "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar -zx
@@ -61,8 +61,8 @@ DEPLOYED_APPS=$(./cf apps | grep ${artifactId} | cut -d" " -f1)
 
 # Map app version onto main app route and scale the app to support traffic
 # cf map-route attendees-0-0-5 cfapps.io -n attendees
-echo "map ${appName} to route ${routeName}.${CF_DOMAIN}"
-./cf map-route $appName $CF_DOMAIN -n $routeName
+echo "map ${appName} to route ${hostname}.${CF_DOMAIN}"
+./cf map-route $appName $CF_DOMAIN -n $hostname
 
 # cf scale attendees-0-0-5 -i 2
 echo "scaling ${appName} up..."
@@ -78,7 +78,7 @@ if [ ! -z "$DEPLOYED_APPS" -a "$DEPLOYED_APPS" != " " -a "$DEPLOYED_APPS" != "$a
     if [ ! -z "$line" -a "$line" != " " -a "$line" != "$appName" -a "$line" != "$artifactId" ]; then 
       echo "Scaling down, unmapping and removing app: $line"
       ./cf scale "$line" -i 1
-      ./cf unmap-route "$line" $CF_DOMAIN -n $routeName
+      ./cf unmap-route "$line" $CF_DOMAIN -n $hostname
       ./cf delete "$line" -f 
     else
       echo "Skipping $line" 
