@@ -23,5 +23,6 @@ inputs:
 run:
   path: attendees-repo/ci/tasks/finalize-deploy.sh
   args: [
-    --version-file, version/number
+    --version-file, version/number,
+    --artifactId, attendees
   ]
