@@ -64,6 +64,9 @@ DEPLOYED_APPS=$(./cf apps | grep ${artifactId} | cut -d" " -f1)
 echo "map ${appName} to route ${hostname}.${CF_DOMAIN}"
 ./cf map-route $appName $CF_DOMAIN -n $hostname
 
+# remove versioned route name
+./cf unmap-route $appName $CF_DOMAIN -n $appName
+
 # cf scale attendees-0-0-5 -i 2
 echo "scaling ${appName} up..."
 ./cf scale $appName -i 2
@@ -78,10 +81,14 @@ if [ ! -z "$DEPLOYED_APPS" -a "$DEPLOYED_APPS" != " " -a "$DEPLOYED_APPS" != "$a
     if [ ! -z "$line" -a "$line" != " " -a "$line" != "$appName" -a "$line" != "$artifactId" ]; then 
       echo "Scaling down, unmapping and removing app: $line"
       ./cf scale "$line" -i 1
-      ./cf unmap-route "$line" $CF_DOMAIN -n $hostname
+      #./cf unmap-route "$line" $CF_DOMAIN -n $hostname
       ./cf delete "$line" -f 
     else
       echo "Skipping $line" 
     fi
   done <<<"$DEPLOYED_APPS" 
 fi
+
+# clear up unused routes
+./cf delete-orphaned-routes -f
+
