@@ -57,7 +57,7 @@ curl -L "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github"
 
 # list the app names which are deployed using the base app name
 DEPLOYED_APPS=$(./cf apps | grep ${artifactId} | cut -d" " -f1)
-#echo $DEPLOYED_APPS
+echo "Deployed apps: ${DEPLOYED_APPS}"
 
 # Map app version onto main app route and scale the app to support traffic
 # cf map-route attendees-0-0-5 cfapps.io -n attendees
