@@ -77,6 +77,7 @@ jobs:
       - aggregate:
         - get: app-release
           passed: [build-app]
+          trigger: true
         - get: attendees-repo
         - get: version
       - task: prepare-manifest
@@ -90,6 +91,7 @@ jobs:
       - aggregate:
         - get: app-release
           passed: [deploy-test]
+          trigger: true
         - get: attendees-repo
       - task: test
         file: attendees-repo/ci/tasks/test.yml
@@ -101,6 +103,7 @@ jobs:
         - get: version
         - get: app-release
           passed: [test-app]
+          trigger: true
       - task: prod-manifest
         file: attendees-repo/ci/tasks/prod-manifest.yml
       - put: cf-prod
@@ -113,6 +116,7 @@ jobs:
       - aggregate:
         - get: attendees-repo
           passed: [blue-deploy-prod]
+          trigger: true
         - get: version
       - task: finalize-deploy
         file: attendees-repo/ci/tasks/finalize-deploy.yml
