@@ -29,6 +29,18 @@ resources:
   - name: cf-prod
     type: cf
     source:
+      ### Use PCF1 environment ###
+      api: {{cf-pcf1-api}}
+      username: {{cf-pcf1-username}}
+      password: {{cf-pcf1-password}}
+      organization: {{cf-pcf1-org}}
+      space: {{cf-pcf1-space}}
+      skip_cert_check: true
+
+  - name: cf-test
+    type: cf
+    source:
+      ### Use PWS environment
       api: {{cf-pws-api}}
       username: {{cf-pws-username}}
       password: {{cf-pws-password}}
@@ -36,23 +48,12 @@ resources:
       space: {{cf-pws-space}}
       skip_cert_check: true
 
-  - name: cf-test
-    type: cf
-    source:
       ### Use pcfdev environment ###
-      api: {{cf-dev-api}}
-      username: {{cf-dev-username}}
-      password: {{cf-dev-password}}
-      organization: {{cf-dev-org}}
-      space: {{cf-dev-space}}
-      skip_cert_check: true
-
-      ### Use PCF1 environment ###
-      # api: {{cf-pcf1-api}}
-      # username: {{cf-pcf1-username}}
-      # password: {{cf-pcf1-password}}
-      # organization: {{cf-pcf1-org}}
-      # space: {{cf-pcf1-space}}
+      # api: {{cf-dev-api}}
+      # username: {{cf-dev-username}}
+      # password: {{cf-dev-password}}
+      # organization: {{cf-dev-org}}
+      # space: {{cf-dev-space}}
       # skip_cert_check: true
 
 jobs:
