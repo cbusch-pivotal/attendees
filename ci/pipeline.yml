@@ -21,7 +21,6 @@ resources:
     type: s3
     source:
       bucket: {{s3-bucket-releases}}
-      #regexp: attendees-(.*).jar
       regexp: attendees-(.*).jar
       access_key_id: {{s3-access-key-id}}
       secret_access_key: {{s3-secret-access-key}}
@@ -40,6 +39,7 @@ resources:
   - name: cf-test
     type: cf
     source:
+      ### Use pcfdev environment ###
       api: {{cf-dev-api}}
       username: {{cf-dev-username}}
       password: {{cf-dev-password}}
@@ -47,15 +47,13 @@ resources:
       space: {{cf-dev-space}}
       skip_cert_check: true
 
-#  - name: cf-test
-#    type: cf
-#    source:
-#      api: {{cf-pcf1-api}}
-#      username: {{cf-pcf1-username}}
-#      password: {{cf-pcf1-password}}
-#      organization: {{cf-pcf1-org}}
-#      space: {{cf-pcf1-space}}
-#      skip_cert_check: true
+      ### Use PCF1 environment ###
+      # api: {{cf-pcf1-api}}
+      # username: {{cf-pcf1-username}}
+      # password: {{cf-pcf1-password}}
+      # organization: {{cf-pcf1-org}}
+      # space: {{cf-pcf1-space}}
+      # skip_cert_check: true
 
 jobs:
   - name: build-app
@@ -67,7 +65,6 @@ jobs:
       - task: build
         file: attendees-repo/ci/tasks/build.yml
       - put: app-release
-        #params: { file: build-output/target/attendees-*.jar}
         params: { file: build-output/target/attendees-*.jar}
       - put: version
         params: { file: version/number }
@@ -129,10 +126,10 @@ jobs:
           CF_ORG: {{cf-pws-org}}
           CF_SPACE: {{cf-pws-space}}
           ### PCF1
-          #CF_API_ENDPOINT: {{cf-pcf1-api}}
-          #CF_DOMAIN: {{cf-pcf1-domain}}
-          #CF_USER: {{cf-pcf1-username}}
-          #CF_PWD: {{cf-pcf1-password}}
-          #CF_ORG: {{cf-pcf1-org}}
-          #CF_SPACE: {{cf-pcf1-space}}
+          # CF_API_ENDPOINT: {{cf-pcf1-api}}
+          # CF_DOMAIN: {{cf-pcf1-domain}}
+          # CF_USER: {{cf-pcf1-username}}
+          # CF_PWD: {{cf-pcf1-password}}
+          # CF_ORG: {{cf-pcf1-org}}
+          # CF_SPACE: {{cf-pcf1-space}}
 
