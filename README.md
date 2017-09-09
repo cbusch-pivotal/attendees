@@ -17,7 +17,7 @@ This base application is intended to demonstrate some of the basic functionality
 * RDBMS service and application auto-configuration
 * Blue green deployments
 
-## Getting Started
+## Getting Started now
 
 **Prerequisites**
 - [Cloud Foundry CLI](http://info.pivotal.io/p0R00I0eYJ011dAUCN06lR2)
