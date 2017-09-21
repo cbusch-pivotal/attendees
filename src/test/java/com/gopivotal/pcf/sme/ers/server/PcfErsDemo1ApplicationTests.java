@@ -15,39 +15,39 @@ import io.pivotal.pcf.sme.ers.server.model.Attendee;
 import io.pivotal.pcf.sme.ers.server.repo.AttendeeRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+//import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = PcfErsDemo1Application.class)
+//@SpringApplicationConfiguration(classes = PcfErsDemo1Application.class)
 @WebAppConfiguration
 public class PcfErsDemo1ApplicationTests {
-	
+
 	@Autowired
 	private AttendeeRepository attendeeRepository;
 
 	@Test
 	public void contextLoads() {
 	}
-	
+
 	@Test
 	public void attendeeRepository() throws ParseException {
-		
+
 		attendeeRepository.deleteAll();
-		
+
 		Attendee a1 = new Attendee();
 		a1.setFirstName("Phil");
 		a1.setLastName("Berman");
 		attendeeRepository.save(a1);
-		
+
 		a1 = new Attendee();
 		a1.setFirstName("Marcelo");
 		a1.setLastName("Borges");
 		attendeeRepository.save(a1);
-		
+
 		List<Attendee> attendees = attendeeRepository.findAll();
 		assertThat(attendees.size(), is(2));
-		
+
 	}
 
 }
