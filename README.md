@@ -26,11 +26,19 @@ This base application is intended to demonstrate some of the basic functionality
 - [Java SE Development Kit](http://info.pivotal.io/n0I60i3021AN0JU0le10CRR)
 
 **Building**
+For simple `cf push` to cloud foundry:
 ```
 $ git clone [REPO]
 $ cd [REPO]
-$ ./mvnw -Pws clean install
-``` 
+$ ./mvnw -Pws -DskipTests=true clean install
+```
+
+When included in a CI/CD pipeline:
+```
+$ git clone [REPO]
+$ cd [REPO]
+$ ./mvnw -Pci -DskipTests=true clean install
+```
 
 ### To run the application locally
 The application is set to use an embedded H2 database in non-PaaS environments, and to take advantage of Pivotal CF's auto-configuration for services. To use a MySQL Dev service in PCF, simply create and bind a service to the app and restart the app. No additional configuration is necessary when running locally or in Pivotal CF.
@@ -48,5 +56,3 @@ Take a look at the manifest file for the recommended setting. Adjust them as per
 
 ## Demo Scripts summary
 The application tries to be self-descriptive. You'll see when you access the application.
-
-
