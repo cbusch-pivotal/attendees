@@ -9,3 +9,5 @@ build/
 /.apt_generated/
 *.swp
 
+.idea/
+*.iml
