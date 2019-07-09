@@ -4,6 +4,7 @@ applications:
   random-route: true
   memory: 1GB
   instances: 1
+  stack: cflinuxfs3
   path: target/attendees-0.0.1.jar
   services: []
   env:
